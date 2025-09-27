@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     importProvidersFrom(BrowserAnimationsModule),
-    importProvidersFrom(ToastrModule.forRoot())
+    importProvidersFrom(ToastrModule.forRoot())  
 
   ]
 };

@@ -1,10 +1,23 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './navbar.component.html'
 })
-export class NavbarComponent { }
+export class NavbarComponent {
+  usuario$: typeof this.authService.usuario$;
+  constructor(private authService: AuthService) {
+    this.usuario$ = this.authService.usuario$;
+  }
+  
+  logout() {
+    this.authService.logout();
+  }
+
+
+ }

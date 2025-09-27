@@ -1,13 +1,28 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/home">Institucional</a>
+    <a class="navbar-brand" routerLink="/home">DATA CEMPRO</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home">Home</a>
+        </li>
         <li class="nav-item"><a class="nav-link" routerLink="/quem-somos">Quem Somos</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/contato">Contato</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/sou-cliente">Sou Cliente</a></li>
       </ul>
+      <ul class="d-flex auth-section navbar-nav">
+          <span *ngIf="usuario$ | async as usuario" class="navbar-text text-white me-3">
+            👤 {{ usuario }}
+          </span>
+        <li class="nav-item">
+          <a *ngIf="usuario$ | async" class="nav-link " routerLink="/sou-cliente" (click)="logout()">🚪 Sair</a>
+        </li>
+      </ul>
+
     </div>
   </div>
 </nav>

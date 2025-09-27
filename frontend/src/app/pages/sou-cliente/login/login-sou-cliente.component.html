@@ -1,0 +1,14 @@
+<div class="container mt-5" style="max-width: 400px;">
+  <h2 class="mb-4">Login</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label>Usuário</label>
+    <input type="text" class="form-control" [(ngModel)]="this.usuario"  name="usuario" required>
+    </div>
+    <div class="mb-3">
+      <label>Senha</label>
+      <input type="password" class="form-control" [(ngModel)]="this.senha" name="senha" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+  </form>
+</div>

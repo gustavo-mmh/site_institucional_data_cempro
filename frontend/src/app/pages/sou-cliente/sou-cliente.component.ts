@@ -1,11 +1,26 @@
 import { Component } from '@angular/core';
+import { LoginSouClienteComponent } from './login/login-sou-cliente.component';
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CrudClienteComponent } from './crud/crud-cliente.component';
 
 @Component({
   selector: 'app-sou-cliente',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    LoginSouClienteComponent,
+    CrudClienteComponent,
+  ],
   templateUrl: './sou-cliente.component.html',
   styleUrl: './sou-cliente.component.scss'
 })
 export class SouClienteComponent {
+  constructor(public auth: AuthService) { }
 
+  get isLogged(): boolean {
+    return this.auth.isAuthenticated();
+  }
 }

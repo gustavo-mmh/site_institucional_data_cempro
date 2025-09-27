@@ -14,7 +14,7 @@
         <li class="nav-item"><a class="nav-link" routerLink="/contato">Contato</a></li>
         <li *ngIf="!isLogged" class="nav-item"><a class="nav-link" routerLink="/login">Sou Cliente</a></li>
       </ul>
-      <ul class="d-flex auth-section navbar-nav">
+      <ul *ngIf="isLogged" class="d-flex auth-section navbar-nav" >
           <span *ngIf="usuario$ | async as usuario" class="navbar-text text-white me-3">
             👤 {{ usuario }}
           </span>

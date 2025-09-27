@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="salvar()">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="nome" placeholder="Digite o nome do produto">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Valor</mat-label>
+    <input matInput type="number" formControlName="valor" placeholder="Digite o valor">
+  </mat-form-field>
+</form>

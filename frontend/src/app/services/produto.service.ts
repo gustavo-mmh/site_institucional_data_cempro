@@ -35,7 +35,7 @@ export class ProdutoService {
   }
 
   getProductById(id: number): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/:${id}`, {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`, {
       headers: this.getAuthHeaders()
     });
   }
@@ -47,13 +47,13 @@ export class ProdutoService {
   }
 
   updateProduct(id: number, produto: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/:${id}`, produto, {
+    return this.http.put<Product>(`${this.apiUrl}/${id}`, produto, {
       headers: this.getAuthHeaders()
     });
   }
 
   deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/:${id}`, {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
       headers: this.getAuthHeaders()
     });
   }

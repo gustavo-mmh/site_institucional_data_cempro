@@ -4,8 +4,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../components/dialog/dialog.component';
 import { Product, ProdutoService } from '../../services/produto.service';
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -22,39 +25,93 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   produtos: Product[] = [];
   role: string | null = null;
-  constructor(private authService: AuthService, private produtoService: ProdutoService) { }
+  errorMessage: string | null = null;
+  constructor(
+    private produtoService: ProdutoService,
+    private toastr: ToastrService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
+    debugger
+     this.loadProducts();
+    
+  }
+  loadProducts(): void {
     this.produtoService.getProducts().subscribe({
-      next: (produtos) => this.dataSource.data = produtos,
-      error: (err) => console.error('Erro ao carregar produtos:', err)
+      next: (data) => {
+        this.produtos = data;
+        this.dataSource.data = this.produtos;
+        this.errorMessage = null;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar produtos:', err);
+        this.errorMessage = 'Erro ao carregar produtos';
+      }
     });
   }
+  
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
-  criarProduto() {
-  //   // const novo: Product = { id: 0, nome: 'Novo Produto', valor: 99.90 };
-  //   this.produtoService.createProduct(novo).subscribe({
-  //     next: () => this.ngOnInit(),
-  //     error: (err) => console.error('Erro ao criar produto:', err)
-  //   });
+  get isAdmin(): boolean {
+    const role = localStorage.getItem('role');
+    return role === 'Admin';
   }
 
-  editar(produto: Product) {
-    const atualizado = { ...produto, preco: produto.valor + 10 };
-    this.produtoService.updateProduct(produto.id, atualizado).subscribe({
-      next: () => this.ngOnInit(),
-      error: (err) => console.error('Erro ao atualizar produto:', err)
+
+  detalheProduto(produto: Product) {
+    this.dialog.open(DialogComponent, {
+      data: {
+        width: '500px',
+        titulo: 'Detalhes do Produto',
+        tipo: 'detalhes',
+        produto
+      }
     });
   }
+  abrirForm(produto?: Product) {
+    if (!this.isAdmin) {
+      this.toastr.error('Apenas Admins podem gerenciar produtos', 'Erro');
+      return;
+    }
+    let dialogRef = this.dialog.open(DialogComponent, {
+      width: '500px',
+      data: {
+        titulo: produto ? 'Editar Produto' : 'Novo Produto',
+        tipo: 'form',
+        produto: produto || null
+      }
+    });
 
-  deletar(produto: Product) {
-    this.produtoService.deleteProduct(produto.id).subscribe({
-      next: () => this.ngOnInit(),
-      error: (err) => console.error('Erro ao deletar produto:', err)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (produto) {
+          this.produtoService.updateProduct(produto.id, result).subscribe(() => this.loadProducts() );
+        } else {
+          if (result.id === null || result.id === undefined) {
+            delete result.id;
+          }
+          this.produtoService.createProduct(result).subscribe(() => this.loadProducts());
+        }
+      }
     });
   }
+  abrirConfirmacao(produto: Product) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data: {
+        titulo: 'Confirmação',
+        tipo: 'confirmacao',
+        produto
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.produtoService.deleteProduct(produto.id).subscribe(() => this.loadProducts());
+      }
+    });
+  }
 }

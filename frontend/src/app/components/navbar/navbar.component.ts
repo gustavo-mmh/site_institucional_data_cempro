@@ -20,6 +20,8 @@ export class NavbarComponent {
   
   logout() {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
   }
 

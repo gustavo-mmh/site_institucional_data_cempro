@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarComponent {
   usuario$: typeof this.authService.usuario$;
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.usuario$ = this.authService.usuario$;
   }
   get isLogged(): boolean {
@@ -19,7 +19,8 @@ export class NavbarComponent {
   }
   
   logout() {
-    this.authService.logout();
+    localStorage.removeItem('access_token');
+    this.router.navigate(['/login']);
   }
 
 

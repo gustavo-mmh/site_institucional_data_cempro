@@ -17,13 +17,22 @@ export class AuthService {
   private usuarioSubject = new BehaviorSubject<string | null>(this.getUsuario());
   usuario$ = this.usuarioSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
+  getRole(): string | null {
+    return localStorage.getItem('role');
+  }
+
   login(credentials:{usuario:string, senha:string}): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.apiUrl, credentials).pipe(
       tap((response: LoginResponse) => {
         if (response.access_token) {
           this.saveToken(response.access_token);
           localStorage.setItem('usuario', credentials.usuario);
+          this.usuarioSubject.next(credentials.usuario);
+
+          const payload = JSON.parse(atob(response.access_token.split('.')[1]));
+          localStorage.setItem('role', payload.roles);
+
           this.usuarioSubject.next(credentials.usuario);
         }
       })

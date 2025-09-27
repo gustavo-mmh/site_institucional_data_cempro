@@ -4,13 +4,13 @@ import { HomeComponent } from './pages/home/home.component';
 import { QuemSomosComponent } from './pages/quem-somos/quem-somos.component';
 import { ContatoComponent } from './pages/contato/contato.component';
 import { SouClienteComponent } from './pages/sou-cliente/sou-cliente.component';
-
+import { AuthGuard } from './guards/autth.guard';
 
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'quem-somos', component: QuemSomosComponent },
   { path: 'contato', component: ContatoComponent },
-  { path: 'sou-cliente', component: SouClienteComponent },
+  { path: 'login', component: SouClienteComponent },
 ];

@@ -3,7 +3,6 @@ import { LoginSouClienteComponent } from './login/login-sou-cliente.component';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CrudClienteComponent } from './crud/crud-cliente.component';
 
 @Component({
   selector: 'app-sou-cliente',
@@ -12,7 +11,6 @@ import { CrudClienteComponent } from './crud/crud-cliente.component';
     CommonModule,
     FormsModule,
     LoginSouClienteComponent,
-    CrudClienteComponent,
   ],
   templateUrl: './sou-cliente.component.html',
   styleUrl: './sou-cliente.component.scss'

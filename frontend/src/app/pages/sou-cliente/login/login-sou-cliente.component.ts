@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
@@ -10,12 +10,12 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, FormsModule, ToastrModule],
   templateUrl: './login-sou-cliente.component.html',
-  styleUrl: './login-sou-cliente.component.scss'
+  styleUrls: ['./login-sou-cliente.component.scss']
 })
 export class LoginSouClienteComponent {
 
-usuario = '';
-senha = '';
+  usuario = '';
+  senha = '';
 
   constructor(
     private authService: AuthService,
@@ -24,8 +24,10 @@ senha = '';
   ) { }
   onSubmit() {
     this.authService.login({ usuario: this.usuario, senha: this.senha }).subscribe({
-      next: () => {
+      next: (response: any) => {
+        localStorage.setItem('access_token', response.access_token);
         this.toastr.success('Login realizado com sucesso!');
+        this.router.navigate(['/home']);
       },
       error: () => {
         this.toastr.error('Usuário ou senha inválidos');

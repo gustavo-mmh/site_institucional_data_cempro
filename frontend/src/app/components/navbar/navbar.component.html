@@ -2,37 +2,95 @@
   [class.bg-danger]="!(isDarkMode$ | async)" [class.navbar-dark]="(isDarkMode$ | async)"
   [class.bg-dark]="(isDarkMode$ | async)">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/home">DATA CEMPRO</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+    <a class="navbar-brand fw-bold" routerLink="/home">DATA CEMPRO</a>
+
+    <div class="d-lg-none d-flex align-items-center order-lg-3">
+      <button class="btn btn-link nav-link p-2 me-2 d-flex align-items-center" (click)="toggleDarkMode()"
+        title="Alternar tema">
+        <mat-icon class="fs-5">{{ (isDarkMode$ | async) ? 'brightness_2' : 'wb_sunny' }}</mat-icon>
+      </button>
+
+      <div *ngIf="isLogged && (usuario$ | async) as usuario" class="d-flex align-items-center me-2">
+        <mat-icon class="me-1">account_circle</mat-icon>
+        <span class="small text-truncate" style="max-width: 100px;">{{ usuario }}</span>
+      </div>
+    </div>
+
+    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
       aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="menu">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a *ngIf="isLogged" class="nav-link" routerLink="/home">Home</a>
+          <a *ngIf="isLogged" class="nav-link py-2" routerLink="/home">
+            <mat-icon class="d-lg-none me-2 align-middle">home</mat-icon>Home
+          </a>
         </li>
-              <li class="nav-item"><a class="nav-link" routerLink="/quem-somos">Quem Somos</a></li>
-              <li class="nav-item"><a class="nav-link" routerLink="/contato">Contato</a></li>
-              <li *ngIf="!isLogged" class="nav-item"><a class="nav-link" routerLink="/login">Sou Cliente</a></li>
+        <li class="nav-item">
+          <a class="nav-link py-2" routerLink="/quem-somos">
+            <mat-icon class="d-lg-none me-2 align-middle">group</mat-icon>Quem Somos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link py-2" routerLink="/contato">
+            <mat-icon class="d-lg-none me-2 align-middle">contact_mail</mat-icon>Contato
+          </a>
+        </li>
+        <li *ngIf="!isLogged" class="nav-item">
+          <a class="nav-link py-2" routerLink="/login">
+            <mat-icon class="d-lg-none me-2 align-middle">login</mat-icon>Sou Cliente
+          </a>
+        </li>
 
+        <li *ngIf="isLogged" class="nav-item d-lg-none">
+          <hr class="my-2 mx-3">
+        </li>
+
+        <li *ngIf="isLogged" class="nav-item d-lg-none">
+          <div class="nav-link py-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <mat-icon class="me-2">account_circle</mat-icon>
+              <span *ngIf="usuario$ | async as usuario">{{ usuario }}</span>
+            </div>
+          </div>
+        </li>
+
+        <li *ngIf="isLogged" class="nav-item d-lg-none">
+          <a class="nav-link py-2 d-flex align-items-center" routerLink="/login" (click)="logout()">
+            <mat-icon class="me-2">logout</mat-icon>Sair
+          </a>
+        </li>
+
+        <li class="nav-item d-lg-none">
+          <div class="nav-link py-2 d-flex align-items-center justify-content-between">
+            <span>Tema</span>
+            <button class="btn btn-link p-0 d-flex align-items-center text-reset" (click)="toggleDarkMode()"
+              title="Alternar tema">
+              <mat-icon>{{ (isDarkMode$ | async) ? 'brightness_2' : 'wb_sunny' }}</mat-icon>
+            </button>
+          </div>
+        </li>
       </ul>
 
-      <ul class="d-flex auth-section navbar-nav align-items-center">
+      <ul class="d-none d-lg-flex auth-section navbar-nav align-items-center">
         <li class="nav-item me-2">
-          <button class="btn btn-link nav-link p-0 d-flex align-items-center me-1" (click)="toggleDarkMode()" title="Alternar tema">
+          <button class="btn btn-link nav-link p-0 d-flex align-items-center me-1" (click)="toggleDarkMode()"
+            title="Alternar tema">
             <mat-icon>{{ (isDarkMode$ | async) ? 'brightness_2' : 'wb_sunny' }}</mat-icon>
           </button>
         </li>
         <li class="nav-item" *ngIf="isLogged">
           <span *ngIf="usuario$ | async as usuario" class="d-flex align-items-center me-3">
-            <mat-icon>account_circle</mat-icon>
+            <mat-icon class="me-1">account_circle</mat-icon>
             {{ usuario }}
           </span>
         </li>
         <li class="nav-item" *ngIf="isLogged">
-          <a *ngIf="usuario$ | async" class="nav-link d-flex align-items-center me-1" routerLink="/login" (click)="logout()">
-            <mat-icon>logout</mat-icon> Sair</a>
+          <a *ngIf="usuario$ | async" class="nav-link d-flex align-items-center me-1" routerLink="/login"
+            (click)="logout()">
+            <mat-icon class="me-1">logout</mat-icon> Sair</a>
         </li>
       </ul>
     </div>

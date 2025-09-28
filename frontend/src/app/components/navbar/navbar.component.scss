@@ -1,43 +1,130 @@
-/* Container de autenticação: força centralização */
-.auth-section {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+/* Melhorias para o navbar responsivo */
+
+/* Garantir que o navbar tenha altura adequada */
+.navbar {
+  min-height: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Itens (texto, botões e links) centralizados verticalmente */
-.auth-section .nav-link,
-.auth-section .navbar-text,
-.auth-section .btn,
-.admin-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0;
-  height: 44px; /* ajuste conforme altura real do navbar */
-  line-height: 1;
+/* Melhorar o espaçamento da marca */
+.navbar-brand {
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
 }
 
-/* Ícones alinhados e tamanho consistente */
-.auth-section mat-icon,
-.admin-label mat-icon,
-.logout-link mat-icon {
-  font-size: 20px;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
+/* Melhorar os links do navbar */
+.navbar-nav .nav-link {
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  margin: 0 2px;
+}
+
+/* Hover effects para desktop */
+@media (min-width: 992px) {
+  .navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+  }
+}
+
+/* Estilos específicos para mobile */
+@media (max-width: 991px) {
+
+  /* Melhorar o menu colapsado */
+  .navbar-collapse {
+    margin-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+  }
+
+  /* Espaçamento dos itens no mobile */
+  .navbar-nav .nav-item {
+    margin: 0.25rem 0;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    margin: 0.125rem 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: inherit;
+  }
+
+  /* Ícones no mobile */
+  .navbar-nav .nav-link mat-icon {
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  /* Separador no menu mobile */
+  .navbar-nav hr {
+    border-color: rgba(255, 255, 255, 0.2);
+    margin: 0.5rem 0;
+  }
+
+  /* Área do usuário no topo (mobile) */
+  .navbar .d-lg-none .small {
+    font-size: 0.875rem;
+    opacity: 0.9;
+  }
+}
+
+/* Toggle do tema */
+.btn-link.nav-link {
+  border: none;
+  color: inherit !important;
+  text-decoration: none;
+}
+
+.btn-link.nav-link:hover {
+  color: inherit !important;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Melhorar o botão do menu hamburguer */
+.navbar-toggler {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+}
+
+/* Ícones do Material Design */
+mat-icon {
   vertical-align: middle;
-  margin: 0;
-  padding: 0;
 }
 
-/* Ajuste fino do texto do usuário */
-.admin-name {
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  vertical-align: middle;
+/* Animações suaves */
+.navbar-collapse {
+  transition: all 0.3s ease-in-out;
 }
 
-/* Remova deslocamentos causados por classes bootstrap (se houver) */
-.auth-section .pt-1 { padding-top: 0 !important; }
+/* Melhorar a visualização do usuário logado */
+.auth-section .nav-item span {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .navbar .d-lg-none .small {
+    max-width: 80px;
+  }
+}

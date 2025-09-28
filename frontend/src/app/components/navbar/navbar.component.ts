@@ -34,6 +34,18 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
   }
-
+  private closeNavbarCollapse(): void {
+    const navbarCollapse = document.getElementById('menu');
+    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+      // Simular clique no botão toggle para fechar o menu
+      const navbarToggler = document.querySelector('.navbar-toggler') as HTMLElement;
+      if (navbarToggler) {
+        navbarToggler.click();
+      }
+    }
+  }
+  onNavLinkClick(): void {
+    this.closeNavbarCollapse();
+  }
 
  }

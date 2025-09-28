@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
      this.loadProducts();
   }
-  
+
   loadProducts(): void {
     this.produtoService.getProducts().subscribe({
       next: (data) => {
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
 
   detalheProduto(produto: Product) {
+    debugger
     this.dialog.open(DialogComponent, {
       data: {
         width: '500px',
@@ -69,6 +70,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
   abrirForm(produto?: Product) {
     if (!this.isAdmin) {
       this.toastr.error('Apenas Admins podem gerenciar produtos', 'Erro');

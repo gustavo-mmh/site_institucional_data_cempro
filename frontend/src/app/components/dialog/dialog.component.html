@@ -1,35 +1,119 @@
-<h2 mat-dialog-title>{{ data.titulo }}</h2>
+<div class="dialog-container">
+  <!-- Header do Dialog -->
+  <div class="dialog-header">
+    <h2 mat-dialog-title class="dialog-title">
+      <mat-icon class="dialog-icon">
+        {{ getDialogIcon() }}
+      </mat-icon>
+      {{ data.titulo }}
+    </h2>
+    <button mat-icon-button class="close-button" (click)="fechar()" aria-label="Fechar">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-<mat-dialog-content class="mat-typography">
-  <ng-container *ngIf="data.tipo === 'detalhes'">
-    <p><strong>Nome:</strong> {{ data.produto.nome }}</p>
-    <p><strong>Valor:</strong> {{ data.produto.valor | currency:'BRL' }}</p>
-    <p><strong>Data Inclusão:</strong> {{ data.produto.dataInclusao | date }}</p>
-    <p><strong>Data Alteração:</strong> {{ data.produto.dataAlteracao | date }}</p>
-  </ng-container>
+  <!-- Conteúdo do Dialog -->
+  <mat-dialog-content class="dialog-content">
+    
+    <!-- Detalhes do Produto -->
+    <ng-container *ngIf="data.tipo === 'detalhes'">
+      <div class="product-details">
+        <div class="detail-card">
+          <div class="detail-item">
+            <mat-icon class="detail-icon">shopping_bag</mat-icon>
+            <div class="detail-content">
+              <span class="detail-label">Nome do Produto</span>
+              <span class="detail-value">{{ data.produto.nome }}</span>
+            </div>
+          </div>
 
-  <ng-container *ngIf="data.tipo === 'form'">
-    <app-produto-form [produto]="data.produto" (onSave)="fechar($event)">
-    </app-produto-form>
-  </ng-container>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">attach_money</mat-icon>
+            <div class="detail-content">
+              <span class="detail-label">Valor</span>
+              <span class="detail-value highlight-price">{{ data.produto.valor | currency:'BRL':'symbol':'1.2-2'  }}</span>
+            </div>
+          </div>
 
-  <ng-container *ngIf="data.tipo === 'confirmacao'">
-    <p>Tem certeza que deseja excluir <b>{{ data.produto.nome }}</b>?</p>
-  </ng-container>
-</mat-dialog-content>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">calendar_today</mat-icon>
+            <div class="detail-content">
+              <span class="detail-label">Data de Inclusão</span>
+              <span class="detail-value">{{ data.produto.dataInclusao | date:'dd/MM/yyyy HH:mm':'pt' }}</span>
+            </div>
+          </div>
 
-<mat-dialog-actions align="end">
-  <ng-container *ngIf="data.tipo === 'detalhes'">
-    <button mat-raised-button color="primary" (click)="fechar()">Fechar</button>
-  </ng-container>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">update</mat-icon>
+            <div class="detail-content">
+              <span class="detail-label">Última Alteração</span>
+              <span class="detail-value">{{ data.produto.dataAlteracao | date:'dd/MM/yyyy HH:mm':'pt' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
 
-  <ng-container *ngIf="data.tipo === 'confirmacao'">
-    <button mat-raised-button color="warn" (click)="fechar()">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="fechar(true)">Confirmar</button>
-  </ng-container>
+    <!-- Formulário do Produto -->
+    <ng-container *ngIf="data.tipo === 'form'">
+      <div class="form-container">
+        <app-produto-form [produto]="data.produto" (onSave)="fechar($event)">
+        </app-produto-form>
+      </div>
+    </ng-container>
 
-  <ng-container *ngIf="data.tipo === 'form'">
-    <button mat-raised-button color="warn" (click)="fechar()">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="salvar()">Salvar</button>
-  </ng-container>
-</mat-dialog-actions>
+    <!-- Confirmação de Exclusão -->
+    <ng-container *ngIf="data.tipo === 'confirmacao'">
+      <div class="confirmation-container">
+        <div class="warning-icon">
+          <mat-icon>warning</mat-icon>
+        </div>
+        <div class="confirmation-content">
+          <h3>Confirmar Exclusão</h3>
+          <p>Tem certeza que deseja excluir o produto <strong>"{{ data.produto.nome }}"</strong>?</p>
+          <div class="warning-message">
+            <mat-icon>info</mat-icon>
+            <span>Esta ação não pode ser desfeita.</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </mat-dialog-content>
+
+  <!-- Ações do Dialog -->
+  <mat-dialog-actions class="dialog-actions">
+    
+    <!-- Ações para Detalhes -->
+    <ng-container *ngIf="data.tipo === 'detalhes'">
+      <button mat-raised-button color="primary" class="action-button primary" (click)="fechar()">
+        <mat-icon>check</mat-icon>
+        Entendi
+      </button>
+    </ng-container>
+
+    <!-- Ações para Confirmação -->
+    <ng-container *ngIf="data.tipo === 'confirmacao'">
+      <button mat-raised-button color="primary" class="action-button primary" (click)="fechar()">
+        <mat-icon>close</mat-icon>
+        Cancelar
+      </button>
+      <button mat-raised-button color="warn" class="action-button danger" (click)="fechar(true)">
+        <mat-icon>delete</mat-icon>
+        Confirmar Exclusão
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="data.tipo === 'form'">
+    <button mat-raised-button color="primary" class="action-button primary" (click)="fechar()">
+        <mat-icon>close</mat-icon>
+        Cancelar
+      </button>
+      <button mat-raised-button color="primary" class="action-button primary" (click)="salvar()" [disabled]="!isFormValid()">
+        <mat-icon>save</mat-icon>
+        Salvar Produto
+      </button>
+    </ng-container>
+
+  </mat-dialog-actions>
+</div>

@@ -12,21 +12,8 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnDestroy {
+export class FooterComponent {
   currentYear = new Date().getFullYear();
-  newsletterEmail = '';
-  showBackToTop = false;
-
-  private destroy$ = new Subject<void>();
-
-  constructor() { }
-
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
 
   navigateToSection(sectionId: string): void {
     const element = document.getElementById(sectionId);
@@ -45,7 +32,7 @@ export class FooterComponent implements OnDestroy {
   get companyInfo() {
     return {
       name: 'DATA CEMPRO',
-      description: 'Soluções inovadoras em tecnologia e gestão de dados para impulsionar seu negócio.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       address: 'Canoas, Rio Grande do Sul, Brasil',
       phone: '+55 (51) 9999-9999',
       email: 'contato@datacempro.com.br',
@@ -65,16 +52,6 @@ export class FooterComponent implements OnDestroy {
       { label: 'Produtos', route: '/produtos' },
       { label: 'Serviços', route: '/servicos' },
       { label: 'Contato', route: '/contato' }
-    ];
-  }
-
-  get serviceLinks() {
-    return [
-      { label: 'Gestão de Dados', url: '#' },
-      { label: 'Análise de Performance', url: '#' },
-      { label: 'Consultoria Tech', url: '#' },
-      { label: 'Suporte Técnico', url: '#' },
-      { label: 'Treinamentos', url: '#' }
     ];
   }
 

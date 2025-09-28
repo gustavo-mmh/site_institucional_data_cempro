@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../components/dialog/dialog.component';
 import { Product, ProdutoService } from '../../services/produto.service';
-import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -33,10 +32,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
      this.loadProducts();
-    
   }
+  
   loadProducts(): void {
     this.produtoService.getProducts().subscribe({
       next: (data) => {

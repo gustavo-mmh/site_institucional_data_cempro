@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginSouClienteComponent } from './login/login-sou-cliente.component';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -15,10 +16,14 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './sou-cliente.component.html',
   styleUrl: './sou-cliente.component.scss'
 })
-export class SouClienteComponent {
-  constructor(public auth: AuthService) { }
-
+export class SouClienteComponent implements OnInit {
+  constructor(public authService: AuthService, private router: Router,) { }
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/home']);
+    }
+  }
   get isLogged(): boolean {
-    return this.auth.isAuthenticated();
+    return this.authService.isAuthenticated();
   }
 }

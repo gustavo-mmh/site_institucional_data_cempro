@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg" [class.navbar-light]="!(isDarkMode$ | async)"
+  [class.bg-danger]="!(isDarkMode$ | async)" [class.navbar-dark]="(isDarkMode$ | async)"
+  [class.bg-dark]="(isDarkMode$ | async)">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/home">DATA CEMPRO</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
@@ -10,19 +12,29 @@
         <li class="nav-item">
           <a *ngIf="isLogged" class="nav-link" routerLink="/home">Home</a>
         </li>
-        <li class="nav-item"><a class="nav-link" routerLink="/quem-somos">Quem Somos</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/contato">Contato</a></li>
-        <li *ngIf="!isLogged" class="nav-item"><a class="nav-link" routerLink="/login">Sou Cliente</a></li>
-      </ul>
-      <ul *ngIf="isLogged" class="d-flex auth-section navbar-nav" >
-          <span *ngIf="usuario$ | async as usuario" class="navbar-text text-white me-3">
-            👤 {{ usuario }}
-          </span>
-        <li class="nav-item">
-          <a *ngIf="usuario$ | async" class="nav-link " routerLink="/login" (click)="logout()">🚪 Sair</a>
-        </li>
+              <li class="nav-item"><a class="nav-link" routerLink="/quem-somos">Quem Somos</a></li>
+              <li class="nav-item"><a class="nav-link" routerLink="/contato">Contato</a></li>
+              <li *ngIf="!isLogged" class="nav-item"><a class="nav-link" routerLink="/login">Sou Cliente</a></li>
+
       </ul>
 
+      <ul class="d-flex auth-section navbar-nav align-items-center">
+        <li class="nav-item me-2">
+          <button class="btn btn-link nav-link p-0 d-flex align-items-center me-1" (click)="toggleDarkMode()" title="Alternar tema">
+            <mat-icon>{{ (isDarkMode$ | async) ? 'brightness_2' : 'wb_sunny' }}</mat-icon>
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="isLogged">
+          <span *ngIf="usuario$ | async as usuario" class="d-flex align-items-center me-3">
+            <mat-icon>account_circle</mat-icon>
+            {{ usuario }}
+          </span>
+        </li>
+        <li class="nav-item" *ngIf="isLogged">
+          <a *ngIf="usuario$ | async" class="nav-link d-flex align-items-center me-1" routerLink="/login" (click)="logout()">
+            <mat-icon>logout</mat-icon> Sair</a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

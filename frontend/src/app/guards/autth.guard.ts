@@ -12,6 +12,7 @@ export class AuthGuard {
     const token = localStorage.getItem('access_token');
 
     if (token) {
+      // if(this.router.url === '/login') this.router.navigate(['/home']);
       return true; 
     } else {
       this.router.navigate(['/login']); 

@@ -1,0 +1,43 @@
+/* Container de autenticação: força centralização */
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Itens (texto, botões e links) centralizados verticalmente */
+.auth-section .nav-link,
+.auth-section .navbar-text,
+.auth-section .btn,
+.admin-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0;
+  height: 44px; /* ajuste conforme altura real do navbar */
+  line-height: 1;
+}
+
+/* Ícones alinhados e tamanho consistente */
+.auth-section mat-icon,
+.admin-label mat-icon,
+.logout-link mat-icon {
+  font-size: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ajuste fino do texto do usuário */
+.admin-name {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+/* Remova deslocamentos causados por classes bootstrap (se houver) */
+.auth-section .pt-1 { padding-top: 0 !important; }

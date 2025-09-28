@@ -1,1 +1,24 @@
-<p>contato works!</p>
+<div class="contato-page">
+  <h2>Fale Conosco</h2>
+
+  <form [formGroup]="contatoForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Mensagem</mat-label>
+      <textarea matInput formControlName="mensagem" rows="5" required></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Enviar Mensagem
+    </button>
+  </form>
+</div>

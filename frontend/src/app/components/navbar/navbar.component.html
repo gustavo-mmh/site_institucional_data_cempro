@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" [class.navbar-light]="!(isDarkMode$ | async)"
+<nav class="navbar navbar-expand-lg fixed-top" [class.navbar-light]="!(isDarkMode$ | async)"
   [class.bg-danger]="!(isDarkMode$ | async)" [class.navbar-dark]="(isDarkMode$ | async)"
   [class.bg-dark]="(isDarkMode$ | async)">
   <div class="container-fluid">

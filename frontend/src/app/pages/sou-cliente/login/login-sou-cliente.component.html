@@ -1,14 +1,41 @@
 <div class="container mt-5" style="max-width: 400px;">
   <h2 class="mb-4">Login</h2>
-  <form (ngSubmit)="onSubmit()">
+
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+
+    <!-- Usuário -->
     <div class="mb-3">
-      <label>Usuário</label>
-    <input type="text" class="form-control" [(ngModel)]="this.usuario"  name="usuario" required>
+      <label class="form-label">Usuário</label>
+      <input type="text" class="form-control" [(ngModel)]="usuario" name="usuario" required minlength="3"
+        #usuarioField="ngModel">
+
+      <div *ngIf="usuarioField.invalid && usuarioField.touched" class="form-text text-danger">
+        <small *ngIf="usuarioField.errors?.['required']">O usuário é obrigatório.</small>
+        <small *ngIf="usuarioField.errors?.['minlength']">O usuário deve ter pelo menos 3 caracteres.</small>
+      </div>
     </div>
+
+    <!-- Senha -->
     <div class="mb-3">
-      <label>Senha</label>
-      <input type="password" class="form-control" [(ngModel)]="this.senha" name="senha" required>
+      <label class="form-label">Senha</label>
+      <input type="password" class="form-control" [(ngModel)]="senha" name="senha" required minlength="6"
+        #senhaField="ngModel">
+
+      <div *ngIf="senhaField.invalid && senhaField.touched" class="form-text text-danger">
+        <small *ngIf="senhaField.errors?.['required']">A senha é obrigatória.</small>
+        <small *ngIf="senhaField.errors?.['minlength']">A senha deve ter pelo menos 6 caracteres.</small>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+
+    <!-- Botão -->
+    <button type="submit" mat-raised-button color="primary" class="w-100" [disabled]="loginForm.invalid">
+      Entrar
+    </button>
+
+    <!-- Mensagem de erro simples -->
+    <div *ngIf="loginError" class="mt-3 text-center text-danger">
+      {{ loginError }}
+    </div>
+
   </form>
 </div>

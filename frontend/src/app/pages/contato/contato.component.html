@@ -5,16 +5,25 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nome</mat-label>
       <input matInput formControlName="nome" required>
+      <mat-error *ngIf="contatoForm.get('nome')?.invalid && contatoForm.get('nome')?.touched">
+        {{ getErrorMessage('nome') }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
       <input matInput formControlName="email" type="email" required>
+      <mat-error *ngIf="contatoForm.get('email')?.invalid && contatoForm.get('email')?.touched">
+        {{ getErrorMessage('email') }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Mensagem</mat-label>
       <textarea matInput formControlName="mensagem" rows="5" required></textarea>
+      <mat-error *ngIf="contatoForm.get('mensagem')?.invalid && contatoForm.get('mensagem')?.touched">
+        {{ getErrorMessage('mensagem') }}
+      </mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit">
